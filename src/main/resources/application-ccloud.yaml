@@ -1,0 +1,25 @@
+# Confluent cloud configurations
+spring:
+  kafka:
+    properties:
+      session:
+        timeout:
+          ms: 45000
+      bootstrap:
+        servers: "${ccloud.kafka.broker}"
+        ssl:
+          endpoint:
+            identification:
+              algorithm: https
+      sasl:
+        mechanism: PLAIN
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${API_KEY}" password="${API_SECRET}";
+      security:
+        protocol: SASL_SSL
+      producer:
+        key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer
+logging:
+  level:
+    root: info
