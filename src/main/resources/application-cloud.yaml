@@ -1,0 +1,29 @@
+# Confluent cloud configurations
+spring:
+  kafka:
+    bootstrap-servers: "${cloud.kafka.broker}"
+    consumer:
+      auto-offset-reset: earliest
+      group-id: hobbit-group
+      key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    session:
+      timeout:
+        ms: 45000
+    properties:
+      ssl:
+        endpoint:
+          identification:
+            algorithm: https
+      security:
+        protocol: SASL_SSL
+      sasl:
+        mechanism: PLAIN
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${API_KEY}" password="${API_SECRET}";
+logging:
+  level:
+    root: info
